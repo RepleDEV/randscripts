@@ -10,21 +10,36 @@ class Commands {
             << "\n" << 
                 "-h, --help | Help Menu"
             << "\n" << 
-                "--- CONVERTER UNITS --"
+                "--- LENGTH UNITS --"
             << "\n" <<
                 "> METRIC"
             << "\n" <<
-                "--milimeter | Integer"
+                "--millimeter <integer>"
             << "\n" <<
-                "--centimeter | Integer"
+                "--centimeter <integer>"
             << "\n" <<
-                "--meter | Integer"
+                "--meter <integer>"
             << "\n" <<
-                "--kilometer | Integer"
+                "--kilometer <integer>"
             << "\n" <<
                 ""
-            << "\n" <<
-            ;
+            << "\n";
+        }
+        int length(std::string a, std::string b, int val) {
+            if (a == b)return -1;
+            std::string units[4] = {"millimeter", "centimeter", "meter", "kilometer"};
+            int aIndex;
+            int bIndex;
+
+            for (int i = 0;i < 4;i++) {
+                std::string unit = units[i];
+                if (unit == a)aIndex = i;
+                else if (unit == b)bIndex = i;
+            }
+            if (aIndex < bIndex) {
+                int diff = bIndex - aIndex;
+                
+            }
         }
 };
 
@@ -48,8 +63,12 @@ int main(int argc, char* argv[]) {
     Commands cmd;
     if (args[0] == "-h" || args[0] == "--help") {
         cmd.help();
-        return;
+        return 0;
+    } else if (args[0] == "--millimeter")
+    {
+        
     }
+    
 
     return 0;
 }
