@@ -18,19 +18,24 @@ Array.prototype.shuffle = function() {
 
 const Sorts = {
     quickSort: function (arr) {
-        if (typeof arr !== "object")throw "ARGUMENT PASSED NOT OF OBJECT TYPE";
+        if (typeof arr !== "object")throw new Error("ARGUMENT PASSED NOT OF OBJECT TYPE");
+        if (arr.length <= 10)return Sorts.insertionSort(arr);
 
-        var partition_pointer = Math.floor(arr.length / 2);
-        var rounds = 0;
+        // This is for getting the median value of the array
+        var pivot = Math.round((Math.min(...arr) + Math.max(...arr)) / 2);
 
-        var partitions = [];
+        arr.splice(arr.indexOf(pivot),1);
 
-        var partition = [[],[]];
-            
-        while (rounds < 1)
+        var partitions = [[],[]];
 
-        partitions.push(...partition);
-        return partitions;
+        arr.forEach(element => {
+            partitions[element <= pivot ? 0 : 1].push(element);
+        });
+
+        partitions.splice(1, 0, [pivot]);
+
+        // RECURSION PROCESS
+        return [].concat(...partitions.map(Sorts.quickSort));
     },
     insertionSort: function (arr) {
         if (typeof arr !== "object")throw "ARGUMENT PASSED NOT OF OBJECT TYPE";
@@ -46,9 +51,47 @@ const Sorts = {
             }
         }
         return arr;
+    },
+    bubbleSort: function (arr) {
+        if (typeof arr !== "object")throw "ARGUMENT PASSED NOT OF OBJECT TYPE";
+
+    },
+    bogoSort: function (arr) {
+        var sortedArr = this.quickSort(arr);
+
+        while (arr != sortedArr) {
+            arr = arr.shuffle();
+            console.log(arr);
+        }
+        return arr;
     }
 }
 
-var arr = [...Array(100).keys()].shuffle();
+function quickSort(origArray) {
+	if (origArray.length <= 1) { 
+		return origArray;
+	} else {
 
-console.log(Sorts.insertionSort(arr));
+		var left = [];
+		var right = [];
+		var newArray = [];
+		var pivot = origArray.pop();
+		var length = origArray.length;
+
+		for (var i = 0; i < length; i++) {
+			if (origArray[i] <= pivot) {
+				left.push(origArray[i]);
+			} else {
+				right.push(origArray[i]);
+			}
+		}
+
+		return newArray.concat(quickSort(left), pivot, quickSort(right));
+    }
+}
+
+var arr = [...Array(10).keys()].shuffle();
+
+var t0 = performance.now();
+console.log(Sorts.bogoSort(arr))
+console.log(performance.now() - t0);
