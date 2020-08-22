@@ -9,23 +9,33 @@
 
 // Solution function
 
-const FluentCalculator = new Proxy({ args: [] }, {
-    get(target, prop, self) {
-        // DEBUG
-        console.log(self);
-
-        // First, check if the property is a value or an operator
-        let values = ["one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "zero"];
-        let operations = ["plus", "minus", "times", "dividedBy"];
-        if (values.indexOf(prop) < 0 || operations.indexOf(prop) < 0)return undefined;
-
-        // Update args and return self
-        target.args.push(prop);
-        return self;
+class FluentCalculator {
+    constructor() {
+        this.ops = [];
     }
-});
+    get one() {
+        this.ops.push("one");
+        return this.connector;
+    }
+    get plus() {
+        this.ops.push("+");
+        return this.connector;
+    }
+    get connector() {
+        var values = ["one"];
+        var operations = ["+"];
+        
+        if (this.ops.length == 1) {
+            return values.indexOf(this.ops[0]) + 1;
+        }
+        console.log(this);
+        return this;
+    }
+}
+
+const fluentcalc = new FluentCalculator();
 
 // Test cases
 
 // TESTING
-console.log(FluentCalculator.one);
+console.log(fluentcalc.one);
