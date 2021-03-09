@@ -1,0 +1,10 @@
+{
+    "compilerOptions": {
+        "target": "ESNext",
+        "outDir": "out/",
+        "module": "commonjs",
+        "removeComments": true
+    },
+    "include": ["TS/"],
+    "exclude": ["JS/", "modules/", "C++/"]
+}
